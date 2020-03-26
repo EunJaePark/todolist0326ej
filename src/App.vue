@@ -31,5 +31,10 @@ export default {
 </script>
 
 <style>
-.wrap{ width:100vw; min-height:100vh; background-color:teal; }
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,900&display=swap');
+.wrap{ 
+  font-family: 'Noto Sans KR', sans-serif;
+  width:100vw; min-height:100vh; background-color:teal;
+  }
+
 </style>

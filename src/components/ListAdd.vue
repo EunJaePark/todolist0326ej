@@ -2,17 +2,17 @@
     <div>
         <input
             v-model="memo"
-            placeholder="할일을 입력하세요"
+            placeholder="할 일을 입력하세요"
         />
-        <button
+        <button          
             v-if="mode === 'add'"
             @click="listAdd"
         >+</button>
-        <button
+        <button          
             v-else
             @click="listEdit2"
         >
-            수정
+            ✐
         </button>
     </div>
 </template>
@@ -26,7 +26,8 @@ export default{
             memo: null,
             index: null,
             mode: 'add',
-            none: 'none'
+            none: 'none',
+            time: null,
         }
     },
     created() {
@@ -45,15 +46,16 @@ export default{
             } else {
                 console.log(this.memo);
                 
-                this.$emit('listAdd1', this.memo)
+                this.$emit('listAdd1', this.memo,           this.index, this.time)
                 this.memo = null
+
             }
         },
         listEdit2() {
             if(this.memo === null) {
                 alert('할일을 입력해 주세요!')
             } else{
-                this.$emit('listEdit3', this.index, this.memo, this.mode, this.none)
+                this.$emit('listEdit3', this.index, this.memo, this.mode, this.none,           this.time)
                 this.memo = null
                 this.mode = 'add'
                 this.none = null
@@ -64,7 +66,7 @@ export default{
 </script>
 
 <style scoped>
-input{ outline:2px solid #353434; width:calc(100% + -21px); padding:17px 20px; }
-button{ outline:2px solid #353434; width:20px; margin-left:1px; padding:17px 0;   }
+input{ outline:2px solid #353434; width:calc(100% + -22px); padding:17px 20px; }
+button{ outline:2px solid #353434; width:20px; margin-left:2px; padding:17px 0;   }
 button:hover{ background-color:#353434; color:#fff; }
 </style>

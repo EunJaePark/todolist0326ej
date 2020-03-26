@@ -6,29 +6,34 @@
             :key="index"
         >
             <p class="num">{{ `${index + 1 }.` }}</p>
-            <p 
-                :class="{'done':list.status === 'done'}"
-            >{{ list.memo }}</p>
+            <p>
+                <span
+                    :class="{'done':list.status === 'done'}"
+                >{{ list.memo }}</span>
+            </p>
             <!-- <p>{{ list.status }}</p> -->
 
-            <div class="btns">
-                <button
-                    v-if="list.status === 'created'"
-                    @click="$emit('statusControl', index, 'done')"
-                >완료</button>
-                <button
-                    v-else
-                    @click="$emit('statusControl', index , 'created')"
-                >부활</button>
-                <button
-                    @click="$emit('listDelete', index)"
-                >제거</button>
-                <button
-                    :class="{'none': list.none === 'none'}"
-                    v-if="list.status === 'created' && list.mode === 'add' || list.none === null"
-                    @click="listEdit1(list.memo, index, 'edit')"
-                >수정</button>
-            </div>
+            <p class="time"> {{ list.time }}</p>
+            <button
+                class="doneRe"
+                v-if="list.status === 'created'"
+                @click="$emit('statusControl', index, 'done')"
+            ></button><!--완료-->
+            <button
+                class="doneRe"
+                v-else
+                @click="$emit('statusControl', index , 'created')"
+            ><span>✔</span></button><!--부활-->
+            <button
+                class="editBtn"
+                :class="{'none': list.none === 'none'}"
+                v-if="list.status === 'created' && list.mode === 'add' || list.none === null"
+                @click="listEdit1(list.memo, index, 'edit')"
+            >✎</button><!--수정-->
+            <button
+                class="removeBtn"
+                @click="$emit('listDelete', index)"
+            >✘</button><!--제거-->
         </div>
     </div>  
 </template>
@@ -52,16 +57,26 @@ export default {
 </script>
 
 <style scoped>
-.listBox{  width:100%; height:250px; display:inline-block; overflow:scroll; }
-.todoListBox{ border-bottom:2px solid #353434; padding:10px 10px; position:relative; }
-.todoListBox + .todoListBox{ margin-top:30px; }
-.todoListBox > p{ width:auto; padding:0 5px; font-size:18px; display:inline-block; }
-.todoListBox > p.num{ margin-right:20px; font-weight:bold; }
-.btns{  display:inline-block; position:absolute; top:calc(100% + 10px); right:5px; }
-.btns > button{ outline:2px solid #353434; width:30px; margin-left:10px; padding:2px 0; font-size:12px; }
-.btns > button:hover{ background-color:#353434; color:#fff; }
+.listBox{  width:100%; height:380px; display:inline-block; overflow:scroll; }
+.todoListBox{ border-bottom:2px solid #353434; margin:40px 0;  position:relative; }
+.todoListBox:first-child{ margin-top:0; }
+/* .todoListBox + .todoListBox{ margin-top:30px; } */
+.todoListBox > p{ width:calc(100% + -140px); padding:0 5px; font-size:18px; display:inline-block; overflow:scroll; }
+.todoListBox > p.num{ width:40px; margin:0 0 0 35px; padding:10px; font-weight:bold;  }
+.todoListBox > p > span{ padding:10px 5px 10px; display:inline-block; }
 
-.done{ color:rgba(53, 52, 52, .8); position:relative; }
-.done:after{ content:''; display:block; width:100%; height:7px; background-color:rgba(255, 0, 0, .7); position:absolute; top:40%; left:0; transform:translateY(-40%);  }
+.todoListBox > .time{ padding:0; text-align:right; font-size:10px; position:absolute; right:0; bottom:2px; }
+
+button{ outline:2px solid #353434; width:18px; line-height:14px; margin-left:10px; padding:2px 0; font-size:13px; position:absolute; }
+button:hover{ background-color:#353434; color:#fff; }
+button.doneRe{ width:15px; height:15px;  bottom:19px; left:2px; } /* 완료 버튼 */
+button.doneRe:hover{ background-color:transparent; color:#353434; }
+button.doneRe > span{ font-size:28px; transform:translateY(-3px); display:inline-block;  }
+button.editBtn{ right:28px; bottom:19px; }
+button.removeBtn{ right:2px; bottom:19px; }
+
+
+.done{ color:rgba(53, 52, 52, .5); position:relative; }
+.done:after{ content:''; display:block; width:100%; height:7px; background-color:rgba(255, 0, 0, .8); position:absolute; top:50%; left:0; transform:translateY(-50%);  }
 .none{ display:none; }
 </style>

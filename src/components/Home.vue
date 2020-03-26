@@ -1,7 +1,8 @@
 <template>
     <div class="homeCont">
         <h1>To Do List</h1>
-        <p>전체 할일:{{ todoList.length }} / 완료된 할일:{{ countDone }} / 남은 할일:{{ todoList.length - countDone }} </p>
+        <p ref="date"></p>
+        <p>총: {{ todoList.length }} | 완료: {{ countDone }} | 남은 할 일: {{ todoList.length - countDone }} </p>
         <div class="listbox">
             <ListAdd
                 @listAdd1 = "listAdd11"
@@ -15,6 +16,7 @@
                 @listDelete = "listDelete1"
             />
         </div>
+
     </div>
 </template>
 
@@ -39,13 +41,23 @@ export default{
                 if( list.status === 'done' ) count++
             } )
             return count
-        }
+        },
+        
     },
     methods: {
         listAdd11(memo) {
             console.log('받았어!');
+
+            // let nowTime = `(${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()} : ${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()})`
+
+            let ampm = new Date().getHours() < 12 ? '오전' : '오후'
+            let hh = (new Date().getHours().toString() % 12) ? new Date().getHours().toString() % 12 : 12
+            let mm = new Date().getMinutes().toString()
+            let ss = new Date().getSeconds().toString()
+
+            let nowTime = ` ${ampm} ${hh < 10 ? `0${hh}` : hh}:${mm < 10 ? `0${mm}` : mm}:${ss < 10 ? `0${ss}` : ss} `
             
-            this.todoList.push({memo:memo, status:'created', mode:'add'})
+            this.todoList.push({memo:memo, status:'created', mode:'add', time: nowTime })
         },
         statusControl1(index, status) {
             this.todoList[index].status = status
@@ -53,9 +65,26 @@ export default{
         listDelete1(index) {
             this.todoList.splice(index, 1)
         },
-        listEdit4(index, memo, mode) {
+        listEdit4(index, memo, mode, time) {
             this.todoList[index].memo = memo
             this.todoList[index].mode = mode
+
+
+            // let nowTime = `(${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()} : ${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()})`
+
+            let ampm = new Date().getHours() < 12 ? '오전' : '오후'
+            let hh = (new Date().getHours().toString() % 12) ? new Date().getHours().toString() % 12 : 12
+            let mm = new Date().getMinutes().toString()
+            let ss = new Date().getSeconds().toString()
+
+            let nowTime = ` ${ampm} ${hh < 10 ? `0${hh}` : hh}:${mm < 10 ? `0${mm}` : mm}:${ss < 10 ? `0${ss}` : ss} `
+
+            this.todoList[index].time = nowTime
+        },
+        today() {
+            // this.todoList.push(new Date().getFullYear())
+
+            this.$refs.date.innerHTML = `new Date().getFullYear()`
         }
     }
 }
@@ -63,8 +92,10 @@ export default{
 </script>
 
 <style scoped>
-.homeCont{ border:4px solid #353434; width:500px; height:500px; padding:20px; background-color:rgb(250, 238, 217); position:absolute; top:200px; left:50%; transform:translateX(-50%); }
-h1{ text-align:center; }
+.homeCont{ border:4px solid #353434; width:500px; height:700px; padding:20px; background-color:rgb(250, 238, 217); position:absolute; top:100px; left:50%; transform:translateX(-50%); }
+h1{ border-bottom:4px solid #353434; margin-bottom:20px; text-align:center; font-size:50px; }
+.dateTime{ outline:1px solid red; width:100%; display:inline-block; }
+#text{ outline:1px solid blue; }
 p{ text-align:center; }
-.listbox{  width:90%; margin:40px auto; }
+.listbox{  width:90%; margin:20px auto 40px; }
 </style>
