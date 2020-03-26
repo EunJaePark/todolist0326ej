@@ -25,7 +25,8 @@ export default{
         return {
             memo: null,
             index: null,
-            mode: 'add'
+            mode: 'add',
+            none: 'none'
         }
     },
     created() {
@@ -52,9 +53,10 @@ export default{
             if(this.memo === null) {
                 alert('할일을 입력해 주세요!')
             } else{
-                this.$emit('listEdit3', this.index, this.memo)
+                this.$emit('listEdit3', this.index, this.memo, this.mode, this.none)
                 this.memo = null
                 this.mode = 'add'
+                this.none = null
             }
         }
     }

@@ -45,7 +45,7 @@ export default{
         listAdd11(memo) {
             console.log('받았어!');
             
-            this.todoList.push({memo:memo, status:'created'})
+            this.todoList.push({memo:memo, status:'created', mode:'add'})
         },
         statusControl1(index, status) {
             this.todoList[index].status = status
@@ -53,8 +53,9 @@ export default{
         listDelete1(index) {
             this.todoList.splice(index, 1)
         },
-        listEdit4(index, memo) {
+        listEdit4(index, memo, mode) {
             this.todoList[index].memo = memo
+            this.todoList[index].mode = mode
         }
     }
 }
@@ -63,5 +64,7 @@ export default{
 
 <style scoped>
 .homeCont{ border:4px solid #353434; width:500px; padding:20px; background-color:rgb(250, 238, 217); }
-.listbox{  width:90%; margin:15px auto; }
+h1{ text-align:center; }
+p{ text-align:center; }
+.listbox{  width:90%; margin:40px auto; }
 </style>
