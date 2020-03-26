@@ -1,11 +1,15 @@
 <template>
-  <v-container>
+  <!-- <v-container>
     <v-layout>
-      <v-flex xs12>
-        <Home/>
-      </v-flex>
+      <v-flex xs12> -->
+
+        <div class="wrap">
+          <Home/>
+        </div>
+        
+      <!-- </v-flex>
     </v-layout>
-  </v-container>
+  </v-container> -->
 </template>
 
 <script>
@@ -25,3 +29,7 @@ export default {
   }),
 };
 </script>
+
+<style>
+.wrap{ width:100vw; min-height:100vh; background-color:teal; }
+</style>

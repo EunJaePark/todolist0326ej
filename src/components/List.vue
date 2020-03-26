@@ -5,6 +5,7 @@
             v-for="(list, index) in todoList"
             :key="index"
         >
+            <p class="num">{{ `${index + 1 }.` }}</p>
             <p 
                 :class="{'done':list.status === 'done'}"
             >{{ list.memo }}</p>
@@ -51,13 +52,16 @@ export default {
 </script>
 
 <style scoped>
-.listBox{  width:100%; display:inline-block; }
-.todoListBox{ border-bottom:2px solid #353434; padding:10px 20px; position:relative; }
+.listBox{  width:100%; height:250px; display:inline-block; overflow:scroll; }
+.todoListBox{ border-bottom:2px solid #353434; padding:10px 10px; position:relative; }
 .todoListBox + .todoListBox{ margin-top:30px; }
-.btns{  display:inline-block; position:absolute; top:calc(100% + 10px); right:0; }
+.todoListBox > p{ width:auto; padding:0 5px; font-size:18px; display:inline-block; }
+.todoListBox > p.num{ margin-right:20px; font-weight:bold; }
+.btns{  display:inline-block; position:absolute; top:calc(100% + 10px); right:5px; }
 .btns > button{ outline:2px solid #353434; width:30px; margin-left:10px; padding:2px 0; font-size:12px; }
 .btns > button:hover{ background-color:#353434; color:#fff; }
 
-.done{ color:rgba(53, 52, 52, .3); text-decoration:line-through; }
+.done{ color:rgba(53, 52, 52, .8); position:relative; }
+.done:after{ content:''; display:block; width:100%; height:7px; background-color:rgba(255, 0, 0, .7); position:absolute; top:40%; left:0; transform:translateY(-40%);  }
 .none{ display:none; }
 </style>

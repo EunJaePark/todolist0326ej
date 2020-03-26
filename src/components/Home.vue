@@ -63,7 +63,7 @@ export default{
 </script>
 
 <style scoped>
-.homeCont{ border:4px solid #353434; width:500px; padding:20px; background-color:rgb(250, 238, 217); }
+.homeCont{ border:4px solid #353434; width:500px; height:500px; padding:20px; background-color:rgb(250, 238, 217); position:absolute; top:200px; left:50%; transform:translateX(-50%); }
 h1{ text-align:center; }
 p{ text-align:center; }
 .listbox{  width:90%; margin:40px auto; }
