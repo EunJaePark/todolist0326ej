@@ -7,6 +7,14 @@ import '@babel/polyfill'
 
 Vue.config.productionTip = false
 
+export const eventBusEdit = new Vue({
+  methods: {
+    listEdit(memo, index) {
+      this.$emit('listEdit0', memo, index)
+    }
+  }
+})
+
 new Vue({
   router,
   store,
