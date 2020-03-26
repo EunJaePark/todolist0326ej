@@ -46,7 +46,7 @@ export default{
             } else {
                 console.log(this.memo);
                 
-                this.$emit('listAdd1', this.memo,           this.index, this.time)
+                this.$emit('listAdd1', this.memo,           this.time)
                 this.memo = null
 
             }
