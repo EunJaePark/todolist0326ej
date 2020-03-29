@@ -8,7 +8,7 @@
             v-if="mode === 'add'"
             @click="listAdd"
         >+</button>
-        <button          
+        <button           
             v-else
             @click="listEdit2"
         >
@@ -28,14 +28,16 @@ export default{
             mode: 'add',
             none: 'none',
             time: null,
+            display: 'block'
         }
     },
     created() {
-        eventBusEdit.$on('listEdit0', (memo, index) => {
+        eventBusEdit.$on('listEdit0', (memo, index, display) => {
             console.log(memo, index);
             this.memo = memo
             this.index = index
             this.mode = 'edit'
+            this.display = display
         })
     },
     methods: {
@@ -46,7 +48,7 @@ export default{
             } else {
                 console.log(this.memo);
                 
-                this.$emit('listAdd1', this.memo,           this.time)
+                this.$emit('listAdd1', this.memo,  this.time)
                 this.memo = null
 
             }
@@ -54,11 +56,11 @@ export default{
         listEdit2() {
             if(this.memo === null) {
                 alert('할일을 입력해 주세요!')
-            } else{
-                this.$emit('listEdit3', this.index, this.memo, this.mode, this.none,           this.time)
-                this.memo = null
+            } else{              
                 this.mode = 'add'
-                this.none = null
+                this.display = 'block'
+                this.$emit('listEdit3', this.index, this.memo, this.mode, this.display,  this.time) 
+                this.memo = null              
             }
         }
     }
