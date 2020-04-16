@@ -1,8 +1,10 @@
 <template>
     <div>
         <input
+            type="text"
             v-model="memo"
             placeholder="할 일을 입력하세요"
+            @keypress.enter="enterKey"
         />
         <button          
             v-if="mode === 'add'"
@@ -43,7 +45,7 @@ export default{
     methods: {
         listAdd(){
             console.log('할일 추가');
-            if(this.memo === null) {
+            if(this.memo === null || this.memo.trim() === '' /*&& typeof(this.memo) === 'string'*/) { //글자가 없거나 스페이스바만 쳤을 때 알림창 뜨도록 함.
                 alert('추가할 할일을 입력해 주세요.')
             } else {
                 console.log(this.memo);
@@ -54,13 +56,21 @@ export default{
             }
         },
         listEdit2() {
-            if(this.memo === null) {
+            if(this.memo === null || this.memo.trim() === '') {
                 alert('할일을 입력해 주세요!')
             } else{              
                 this.mode = 'add'
                 this.display = 'block'
-                this.$emit('listEdit3', this.index, this.memo, this.mode, this.display,  this.time) 
+                this.$emit('listEdit3', this.index, this.memo, this.mode, this.display,  /*this.time*/) 
                 this.memo = null              
+            }
+        },
+        enterKey() {
+            if(this.mode === 'add') {
+                console.log('click enter!!!!!!!!');
+                this.listAdd()
+            } else {
+                this.listEdit2()
             }
         }
     }

@@ -44,13 +44,15 @@
 
             <button
                 class="importBtn"
-                v-if="list.importStar === 'off'"
+                v-if="list.importStar === 'off' && list.status === 'created' && list.mode === 'add'"
                 @click="listImport(index, 'onImport')"
+                :disabled="list.display === 'none'"
             >☆</button>
             <button
                 class="importBtn importOn"
-                v-else
+                v-else-if="list.status === 'created' && list.mode === 'add'"
                 @click="listImport(index, 'offImport')"
+                :disabled="list.display === 'none'"
             >★</button>
         </div>
     </div>  
@@ -77,10 +79,17 @@ export default {
                 this.todoList[index].importStar = 'on'
                 this.todoList.unshift(this.todoList[index])
                 this.todoList.splice((index + 1), 1)
+                console.log(`우선순위 킨 리스트의 star상태: ${this.todoList[index].importStar}`);
+                console.log(`우선순위 킨 현재리스트의 index: ${this.todoList[index].index}`);
+                
             } else {
+                console.log('starOff 클릭했다!!!!!!!!!!!!');
+                
                 this.todoList[index].importStar = 'off'
                 let beforeList = this.todoList[index]
                 let beforeIndex = this.todoList[index].index
+                console.log(`beforeIndex: ${beforeIndex}`);
+                
 
                 let importStarsOn = 0
                 for(let i = 0; i < this.todoList.length; i++) {
@@ -91,16 +100,26 @@ export default {
                 
                 console.log(`star가 on인 것의 갯수: ${importStarsOn}`);
                 
-                // this.todoList.splice(index, 1)
-                if(importStarsOn < 2) {
-                   this.todoList.splice((importStarsOn + beforeIndex + 1), 0, beforeList) 
-                }
-                else {
-                    this.todoList.splice((importStarsOn + beforeIndex - 1), 0, beforeList)
+
+                // if(importStarsOn < 2) {
+                //    this.todoList.splice((importStarsOn + beforeIndex + 1), 0, beforeList) 
+                // }
+                // else {
+                //     this.todoList.splice((importStarsOn + beforeIndex - 1), 0, beforeList)
+                // }
+
+                console.log(importStarsOn + beforeIndex);
+                if(importStarsOn < 1) {
+                    this.todoList.splice((importStarsOn + beforeIndex + 1), 0, beforeList)
+                } else if(importStarsOn <= 2) {  //2개일 때에는 더 작은 숫자의 starsOn이 자리를 하나 전으로 가게 됨.
+                    this.todoList.splice((importStarsOn + beforeIndex ), 0, beforeList)
                 }
 
                  
                 this.todoList.splice(index, 1)
+
+                 console.log(`우선순위 끈 리스트의 star상태: ${this.todoList[index].star}`);
+
             }
         }
     }

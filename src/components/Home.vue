@@ -40,7 +40,8 @@ export default{
         return {
             todoList: [],
             todayDate: '',
-            todayTime: ''
+            todayTime: '',
+
         }
     },
     computed: {
@@ -55,17 +56,7 @@ export default{
     },
     methods: {
         listAdd11(memo) {
-            console.log('받았어!');
-
-            // let nowTime = `(${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()} : ${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()})`
-
-            let ampm = new Date().getHours() < 12 ? '오전' : '오후'
-            let hh = (new Date().getHours().toString() % 12) ? new Date().getHours().toString() % 12 : 12
-            let mm = new Date().getMinutes().toString()
-            let ss = new Date().getSeconds().toString()
-
-            let nowTime = ` ${ampm} ${hh < 10 ? `0${hh}` : hh}:${mm < 10 ? `0${mm}` : mm}:${ss < 10 ? `0${ss}` : ss} `
-            
+            console.log('받았어!');            
 
             let indexNum = 0;
             for(let i = 0; i < this.todoList.length; i++) {
@@ -73,7 +64,7 @@ export default{
                 if( this.todoList.length > 0 ) indexNum++
             }
 
-            this.todoList.push({memo:memo, status:'created', mode:'add', time: nowTime, importStar:'off', index: indexNum })
+            this.todoList.push({memo:memo, status:'created', mode:'add', time: this.listTime()/*nowTime*/, importStar:'off', index: indexNum })
         },
         statusControl1(index, status) {
             this.todoList[index].status = status
@@ -81,25 +72,14 @@ export default{
         listDelete1(index) {
             this.todoList.splice(index, 1)
         },
-        listEdit4(index, memo, mode, time, display) {
+        listEdit4(index, memo, mode, /*time,*/ display) {
             this.todoList[index].memo = memo
             this.todoList[index].mode = mode
+            this.todoList[index].time = this.listTime()
 
             for(let i = 0; i < this.todoList.length; i++) {
                 this.todoList[i].display = display
             }
-
-
-            // let nowTime = `(${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()} : ${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()})`
-
-            let ampm = new Date().getHours() < 12 ? '오전' : '오후'
-            let hh = (new Date().getHours().toString() % 12) ? new Date().getHours().toString() % 12 : 12
-            let mm = new Date().getMinutes().toString()
-            let ss = new Date().getSeconds().toString()
-
-            let nowTime = ` ${ampm} ${hh < 10 ? `0${hh}` : hh}:${mm < 10 ? `0${mm}` : mm}:${ss < 10 ? `0${ss}` : ss} `
-
-            this.todoList[index].time = nowTime
         },
         resetTime() {
             setInterval(() => {
@@ -126,6 +106,14 @@ export default{
                 this.todayDate = writeDate
                 this.todayTime = nowTime
             }, 1000)
+        },
+        listTime() {
+            let ampm = new Date().getHours() < 12 ? '오전' : '오후'
+            let hh = (new Date().getHours().toString() % 12) ? new Date().getHours().toString() % 12 : 12
+            let mm = new Date().getMinutes().toString()
+            let ss = new Date().getSeconds().toString()
+
+            return this.nowTime = ` ${ampm} ${hh < 10 ? `0${hh}` : hh}:${mm < 10 ? `0${mm}` : mm}:${ss < 10 ? `0${ss}` : ss} `
         }
     }
 }
